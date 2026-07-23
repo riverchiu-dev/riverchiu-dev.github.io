@@ -1,11 +1,6 @@
+# River Chiu - Portfolio
 
-  # Portfolio für Grafikdesign
+Mein persönliches Portfolio als Fachinformatiker für Anwendungsentwicklung.
 
-  This is a code bundle for Portfolio für Grafikdesign. The original project is available at https://www.figma.com/design/DmXRGtT5tKSbu6MlApzaH8/Portfolio-f%C3%BCr-Grafikdesign.
-
-  ## Running the code
-
-  Run `npm i` to install the dependencies.
-
-  Run `npm run dev` to start the development server.
-  
+- **Tech Stack:** TypeScript, React/Vite, Tailwind CSS, Shadcn UI
+- **Design:** UI/UX Design mit Figma
