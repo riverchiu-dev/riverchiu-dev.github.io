@@ -215,7 +215,7 @@ export default function App() {
         </div>
 
         <div className="max-w-6xl mx-auto w-full relative z-10">
-          <p className="font-mono text-xs tracking-widest text-primary uppercase mb-5">
+          <p className="font-mono text-xs tracking-widest text-primary mt-5 uppercase">
             PORTFOLIO — SOFTWARE ENGINEERING & DESIGN | FLENSBURG
           </p>
 
