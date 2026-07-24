@@ -55,10 +55,10 @@ const PROJECTS = [
 ];
 
 const SKILLS = [
-  { group: "Design", items: ["UI/UX Wireframing", "Figma", "Adobe Illustrator", "Adobe Photoshop", "Corporate Design", "Manga & Skizzieren"] },
-  { group: "Entwicklung", items: ["Python", "PHP", "SQL", "XML", "Odoo ERP", "QWeb", "Tkinter"] },
-  { group: "Systeme", items: ["macOS", "Linux", "Git", "Docker"] },
-  { group: "Sprachen", items: ["Deutsch C1", "Englisch B2–C1", "Kantonesisch (Muttersprache)"] },
+  { group: "Design", items: ["UI/UX Wireframing", "Figma", "Adobe Illustrator", "Adobe Photoshop", "Corporate Design", "Skizzieren"] },
+  { group: "Entwicklung", items: ["Python", "PHP", "SQL", "XML", "Odoo ERP", "Java", "HTML", "CSS", "JavaScript"] },
+  { group: "Systeme", items: ["macOS", "Windows", "Git", "Docker"] },
+  { group: "Sprachen", items: ["Deutsch C1", "Englisch B2–C1", "Mandarin (Muttersprache)"] },
 ];
 
 const QUALIFICATIONS = [
