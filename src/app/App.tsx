@@ -69,16 +69,16 @@ const QUALIFICATIONS = [
     note: "Berufsbegleitendes Studium",
   },
   {
-    title: "Fachinformatiker für Anwendungsentwicklung",
-    org: "IHK-Abschluss (Hamburg)",
+    title: "FACHINFORMATIKER FÜR ANWENDUNGSENTWICKLUNG",
+    org: "BFW Hamburg · IHK-Abschluss (Hamburg)",
     period: "2024 – 2026",
-    note: "Abschlussprojekt: Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
+    note: "Abschlussprojekt: Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
   },
   {
-    title: "B.A. Accounting",
-    org: "Hochschule",
+    title: "B.A. ACCOUNTING",
+    org: "China University of Technology (Mit ZAB-Zeugnisbewertung)",
     period: "Abgeschlossen",
-    note: "Fundierter betriebswirtschaftlicher Hintergrund",
+    note: "Fundierter betriebswirtschaftlicher Hintergrund & praktische Bank-/Buchhaltungserfahrung",
   },
 ];
 
