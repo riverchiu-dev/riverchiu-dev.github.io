@@ -182,7 +182,7 @@ export default function App() {
         <div
           className="md:hidden overflow-hidden transition-all duration-300 bg-[rgba(8,8,8,0.98)] backdrop-blur-md"
           style={{ 
-            maxHeight: menuOpen ? "220px" : "0px" 
+            maxHeight: menuOpen ? "220px" : "0px", 
             borderBottom: menuOpen ? "1px solid rgba(240,237,230,0.07)" : "none"
           }}
         >
