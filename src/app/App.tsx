@@ -12,7 +12,7 @@ const PROJECTS = [
     detail:
       "Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das Drucken mehrsprachiger Dokumente. Entwicklung eines interaktiven Wizards mit QWeb-Vorlagen, angepasster UI-Sprache und nahtloser Integration in bestehende NGO-Workflows bei humanilog. Abschlussprojekt der IHK-Ausbildung.",
     stack: ["Odoo 16", "Python", "QWeb", "XML", "UI/UX"],
-    img: "/portfolio/images/Odoo-wizard.png",
+    img: "images/Odoo-wizard.png",
     year: "2026",
   },
   {
@@ -24,7 +24,7 @@ const PROJECTS = [
     detail:
       "Entwicklung einer vollständigen Web-Applikation zur Urlaubsverwaltung mit rollenbasiertem Zugriffskonzept für Mitarbeiter und Administratoren. Inklusive Datenbankmodellierung (SQL), interaktiver Dashboards und UX-Wireframing für alle Nutzerrollen.",
     stack: ["PHP", "SQL", "HTML/CSS", "Wireframing"],
-    img: "/portfolio/images/120968068-h-720.jpg",
+    img: "images/120968068-h-720.jpg",
     year: "2025",
   },
   {
@@ -36,7 +36,7 @@ const PROJECTS = [
     detail:
       "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
     stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
-    img: "/portfolio/images/Supermarkt01.jpg",
+    img: "images/Supermarkt01.jpg",
     year: "2025",
   },
   {
@@ -48,7 +48,7 @@ const PROJECTS = [
     detail:
       "Ausgewählte visuelle und grafische Arbeiten (u. a. aus 2015). Umfangreiche Sammlung visueller und grafischer Arbeiten (Skizzieren, Malerei, Branding). Konzeption von Printmedien und digitalen Assets mit Adobe Photoshop, Illustrator und traditionellen Medien.",
     stack: ["Adobe Illustrator", "Photoshop", "Skizzieren", "Branding"],
-    img: "/portfolio/images/grafikdesign02.jpg",
+    img: "images/grafikdesign02.jpg",
     link: "https://www.flickr.com/photos/riversworld/albums/72157632154583025/",
     year: "2015",
   },
