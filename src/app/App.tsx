@@ -462,7 +462,7 @@ export default function App() {
             {[
               { label: "E-Mail", value: "river.chiu@yahoo.de", href: "mailto:river.chiu@yahoo.de" },
               { label: "GitHub", value: "github.com/riverchiu-dev", href: "https://github.com/riverchiu-dev" },
-              { label: "Standort", value: "Flensburg, Deutschland (Remote-fähig)", href: "#" },
+              { label: "Standort", value: "Flensburg, Deutschland (Remote-fähig)", href: "https://www.google.com/maps/place/Flensburg" },
             ].map(({ label, value, href }, i) => (
               <Reveal key={label} delay={i * 60}>
                 <a
