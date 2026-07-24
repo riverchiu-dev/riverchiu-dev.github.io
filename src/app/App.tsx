@@ -5,7 +5,7 @@ import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 const PROJECTS = [
   {
     id: 1,
-    title: "Odoo 16.0 Print Language Wizard",
+    title: "Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
     tag: "ERP / UI Extension",
     context: "IHK-Abschlussprojekt · humanilog",
     description: "ERP UI/UX-Erweiterung, Wizard-Design & QWeb-Integration für multilokale NGO-Prozesse.",
