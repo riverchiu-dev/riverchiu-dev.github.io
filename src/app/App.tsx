@@ -246,15 +246,19 @@ export default function App() {
               </button>
             </div>
           </div>
-
           <div className="mt-12 flex items-center gap-3">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
-            <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
-              Verfügbar ab September 2026 · Master Wirtschaftsinformatik Online (HAW Kiel)
-            </span>
+            <div className="flex flex-col">
+              <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
+                VERFÜGBAR AB AUGUST 2026
+              </span>
+              <span className="font-mono text-xs text-muted-foreground italic">
+                Master Wirtschaftsinformatik Online (HAW Kiel, ab Sept. 2026)
+              </span>
+            </div>
           </div>
         </div>
 
@@ -455,17 +459,16 @@ export default function App() {
               <span className="text-primary">reden.</span>
             </h2>
             <p className="text-muted-foreground mt-5 max-w-md leading-relaxed">
-              Du hast ein Projekt oder eine Idee? Ich freue mich über deine Nachricht — ob
-              Freelance-Auftrag, Praktikum oder Vollzeitstelle ab September 2026.
+              Du hast ein Projekt oder eine Idee? Ich freue mich über deine Nachricht — ob 
+              Teilzeit oder Vollzeit ab August 2026.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
             {[
               { label: "E-Mail", value: "river.chiu@yahoo.de", href: "mailto:river.chiu@yahoo.de" },
-              { label: "LinkedIn", value: "linkedin.com/in/riverchiu", href: "https://www.linkedin.com" },
               { label: "GitHub", value: "github.com/riverchiu-dev", href: "https://github.com/riverchiu-dev" },
-              { label: "Standort", value: "Flensburg, Deutschland", href: "#" },
+              { label: "Standort", value: "Flensburg, Deutschland (Remote-fähig)", href: "#" },
             ].map(({ label, value, href }, i) => (
               <Reveal key={label} delay={i * 60}>
                 <a
