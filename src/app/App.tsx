@@ -464,7 +464,7 @@ export default function App() {
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl">
             {[
               { label: "E-Mail", value: "river.chiu@yahoo.de", href: "mailto:river.chiu@yahoo.de" },
               { label: "GitHub", value: "github.com/riverchiu-dev", href: "https://github.com/riverchiu-dev" },
