@@ -239,15 +239,6 @@ export default function App() {
               für Anwendungsentwicklung und erfahrener Grafikdesigner. Ich verbinde fundierte
               Design-Expertise mit moderner Softwareentwicklung (Python, PHP, Odoo ERP).
             </p>
-
-            <div className="shrink-0">
-              <button
-                onClick={() => scrollTo("projekte")}
-                className="font-mono text-sm tracking-widest uppercase px-8 py-4 bg-primary text-primary-foreground hover:opacity-90 transition-opacity duration-200 font-semibold"
-              >
-                Projekte ansehen
-              </button>
-            </div>
           </div>
           <div className="mt-12 flex items-center gap-3">
             <span className="relative flex h-2 w-2">
