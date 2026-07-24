@@ -147,9 +147,9 @@ export default function App() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
         style={{
-          background: (scrolled || mobileMenuOpen) ? "rgba(8,8,8,0.98)" : "transparent",
-          backdropFilter: (scrolled || mobileMenuOpen) ? "blur(14px)" : "none",
-          borderBottom: (scrolled || mobileMenuOpen) ? "1px solid rgba(240,237,230,0.07)" : "none",
+          background: scrolled ? "rgba(8,8,8,0.98)" : "transparent",
+          backdropFilter: scrolled ? "blur(14px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(240,237,230,0.07)" : "none",
         }}
       >
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -180,8 +180,11 @@ export default function App() {
         </div>
 
         <div
-          className="md:hidden overflow-hidden transition-all duration-300"
-          style={{ maxHeight: menuOpen ? "220px" : "0px" }}
+          className="md:hidden overflow-hidden transition-all duration-300 bg-[rgba(8,8,8,0.98)] backdrop-blur-md"
+          style={{ 
+            maxHeight: menuOpen ? "220px" : "0px" 
+            borderBottom: menuOpen ? "1px solid rgba(240,237,230,0.07)" : "none"
+          }}
         >
           <div className="px-6 pb-6 pt-4 flex flex-col gap-5 border-t border-border">
             {[["Projekte", "projekte"], ["Qualifikationen", "qualifikationen"], ["Kontakt", "kontakt"]].map(([label, id]) => (
