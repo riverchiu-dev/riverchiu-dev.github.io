@@ -36,7 +36,7 @@ const PROJECTS = [
     detail:
       "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
     stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
-    img: "images/Supermarkt01.jpg",
+    img: "images/supermarkt01.jpg",
     year: "2025",
   },
   {
