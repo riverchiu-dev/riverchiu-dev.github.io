@@ -1,421 +1,600 @@
-import React, { useState, useEffect } from "react";
-import {
-  Menu,
-  X,
-  ExternalLink,
-  Github,
-  Mail,
-  ChevronDown,
-  ArrowUpRight,
-} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowUpRight, Menu, X, ExternalLink } from "lucide-react";
+import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 
-// Types
-interface Project {
-  id: string;
-  num: string;
-  title: string;
-  category: string;
-  client: string;
-  year: string;
-  tags: string[];
-  description: string;
-  details: string[];
-  img: string;
-  githubUrl?: string;
-  demoUrl?: string;
-}
-
-// Helper: Image with Fallback
-const ImageWithFallback: React.FC<{
-  src: string;
-  alt: string;
-  className?: string;
-}> = ({ src, alt, className }) => {
-  const [error, setError] = useState(false);
-
-  return (
-    <img
-      src={
-        error
-          ? "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"
-          : src
-      }
-      alt={alt}
-      className={className}
-      onError={() => setError(true)}
-    />
-  );
-};
-
-const PROJECTS: Project[] = [
+const PROJECTS = [
   {
-    id: "odoo",
-    num: "01",
-    title: "Odoo Custom Wizard & Module",
-    category: "ERP & Python Development",
-    client: "Internal / Enterprise",
-    year: "2024",
-    tags: ["Python", "Odoo", "XML", "PostgreSQL"],
-    description:
-      "Custom ERP workflow extension built for streamlined data management and automated wizard interactions.",
-    details: [
-      "Designed and implemented custom Odoo models and wizards for complex data workflows.",
-      "Integrated backend logic with customized XML views and UI components.",
-      "Optimized query performance and database structure for high-volume transactions.",
-    ],
-    img: "/images/Odoo-wizard.png",
-    githubUrl: "https://github.com",
+    id: 1,
+    title: "Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
+    tag: "ERP / UI Extension",
+    context: "IHK-Abschlussprojekt · humanilog",
+    description: "ERP UI/UX-Erweiterung, Wizard-Design & QWeb-Integration für multilokale NGO-Prozesse.",
+    detail:
+      "Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das Drucken mehrsprachiger Dokumente. Entwicklung eines interaktiven Wizards mit QWeb-Vorlagen, angepasster UI-Sprache und nahtloser Integration in bestehende NGO-Workflows bei humanilog. Abschlussprojekt der IHK-Ausbildung.",
+    stack: ["Odoo 16", "Python", "QWeb", "XML", "UI/UX"],
+    img: "images/Odoo-wizard.png",
+    year: "2026",
   },
   {
-    id: "dashboard",
-    num: "02",
-    title: "Analytics Dashboard",
-    category: "Web Application",
-    client: "Fintech Client",
-    year: "2024",
-    tags: ["React", "TypeScript", "Tailwind CSS", "Recharts"],
-    description:
-      "A real-time financial tracking dashboard with customizable widgets and dark mode support.",
-    details: [
-      "Built interactive data visualizations using Recharts and D3.js.",
-      "Implemented seamless state management for real-time WebSocket data feeds.",
-      "Ensured full responsive design and AA accessibility compliance.",
-    ],
-    img: "/images/40x40.jpg",
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
+    id: 2,
+    title: "Webanwendung mit SQL: Urlaubsverwaltung",
+    tag: "Web-App / Fullstack",
+    context: "Umschulungsprojekt (Teamarbeit)",
+    description: "Web-Anwendung (PHP/SQL) mit Rollenkonzept (User/Admin), Dashboards & Wireframing.",
+    detail:
+      "Entwicklung einer vollständigen Web-Applikation zur Urlaubsverwaltung mit rollenbasiertem Zugriffskonzept für Mitarbeiter und Administratoren. Inklusive Datenbankmodellierung (SQL), interaktiver Dashboards und UX-Wireframing für alle Nutzerrollen.",
+    stack: ["PHP", "SQL", "HTML/CSS", "Wireframing"],
+    img: "images/120968068-h-720.jpg",
+    year: "2025",
+  },
+  {
+    id: 3,
+    title: "Supermarkt-Applikation in Python",
+    tag: "Desktop GUI / Python",
+    context: "Umschulungsprojekt",
+    description: "Python/Tkinter GUI-Layout mit Rollentrennung für Kunden, Mitarbeiter und Manager.",
+    detail:
+      "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
+    stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
+    img: "images/supermarkt01.jpg",
+    year: "2025",
+  },
+  {
+    id: 4,
+    title: "Corporate Design & Visuelle Kommunikation",
+    tag: "Grafikdesign / Branding",
+    context: "Flickr Portfolio & Print Media",
+    description: "Konzeption und Gestaltung von Corporate-Design-Medien, Illustrationen & Web-Assets.",
+    detail:
+      "Ausgewählte visuelle und grafische Arbeiten (u. a. aus 2015). Umfangreiche Sammlung visueller und grafischer Arbeiten (Skizzieren, Malerei, Branding). Konzeption von Printmedien und digitalen Assets mit Adobe Photoshop, Illustrator und traditionellen Medien.",
+    stack: ["Adobe Illustrator", "Photoshop", "Skizzieren", "Branding"],
+    img: "images/grafikdesign02.jpg",
+    link: "https://www.flickr.com/photos/riversworld/albums/72157632154583025/",
+    year: "2015",
   },
 ];
 
+const SKILLS = [
+  { group: "Design", items: ["UI/UX Wireframing", "Figma", "Adobe Illustrator", "Adobe Photoshop", "Corporate Design", "Skizzieren"] },
+  { group: "Entwicklung", items: ["Python", "PHP", "SQL", "XML", "Odoo ERP", "Java", "HTML", "CSS", "JavaScript"] },
+  { group: "Systeme", items: ["macOS", "Windows", "Git", "Docker"] },
+  { group: "Sprachen", items: ["Deutsch C1", "Englisch B2–C1", "Mandarin (Muttersprache)"] },
+];
+
+const QUALIFICATIONS = [
+  {
+    title: "M.Sc. Wirtschaftsinformatik Online",
+    org: "HAW Kiel",
+    period: "ab September 2026",
+    note: "Berufsbegleitendes Studium",
+  },
+  {
+    title: "FACHINFORMATIKER FÜR ANWENDUNGSENTWICKLUNG",
+    org: "BFW Hamburg · IHK-Abschluss (Hamburg)",
+    period: "2024 – 2026",
+    note: "Abschlussprojekt: Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
+  },
+  {
+    title: "B.A. ACCOUNTING",
+    org: "China University of Technology (Mit ZAB-Zeugnisbewertung)",
+    period: "2007 - 2011",
+    note: "Fundierter betriebswirtschaftlicher Hintergrund & praktische Bank-/Buchhaltungserfahrung",
+  },
+];
+
+function useReveal(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+function Reveal({ children, delay = 0, className = "" }: {
+  children: React.ReactNode; delay?: number; className?: string;
+}) {
+  const { ref, visible } = useReveal();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeProject, setActiveProject] = useState<string | null>("odoo");
-  const [modalProject, setModalProject] = useState<Project | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [modalProject, setModalProject] = useState<typeof PROJECTS[0] | null>(null);
 
-  // Lock scroll when modal is open
   useEffect(() => {
-    if (modalProject) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [modalProject]);
-
-  // Handle ESC key to close modal or mobile menu
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setModalProject(null);
-        setMenuOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    const fn = () => setScrolled(window.scrollY > 48);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("fade-in-visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll(".fade-in-on-scroll").forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
+  };
 
   return (
-    <div className="bg-[#0D0D0D] text-[#E5E5E5] min-h-screen font-sans selection:bg-white selection:text-black">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-40 bg-[#0D0D0D]/80 backdrop-blur-md border-b border-neutral-800/50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-          <a href="#" className="flex items-center gap-3 group">
-            <ImageWithFallback
-              src="/images/40x40.jpg"
-              alt="Logo"
-              className="w-10 h-10 rounded-full border border-neutral-700 object-cover group-hover:border-neutral-400 transition-colors"
-            />
-            <span className="font-semibold text-lg tracking-wider uppercase font-mono">
-              Portfolio
-            </span>
-          </a>
+    <div className="min-h-screen bg-background text-foreground" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
+      <style>{`
+        :root {
+          --muted-foreground: #cccccc;
+        }
+        .font-display { font-family: 'Barlow Condensed', Arial Narrow, sans-serif; }
+        .font-mono   { font-family: 'DM Mono', monospace; }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; }
+        * { scrollbar-width: thin; scrollbar-color: #2a2a2a transparent; }
+      `}</style>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest text-neutral-400">
-            <a href="#about" className="hover:text-white transition-colors">
-              About
-            </a>
-            <a href="#projects" className="hover:text-white transition-colors">
-              Projects
-            </a>
-            <a href="#contact" className="hover:text-white transition-colors">
-              Contact
-            </a>
+      {/* ─── NAV ─── */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
+        style={{
+          background: scrolled ? "rgba(8,8,8,0.98)" : "transparent",
+          backdropFilter: scrolled ? "blur(14px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(240,237,230,0.07)" : "none",
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+          <button
+            onClick={() => scrollTo("hero")}
+            className="shrink-0 hover:opacity-80 transition-opacity flex items-center gap-2"
+            aria-label="River Chiu – zur Startseite"
+          >
+            <ImageWithFallback src="/images/40x40.jpg" alt="river. Logo" className="w-9 h-9 object-cover rounded-full" />
+            <span className="font-mono text-xs tracking-widest uppercase font-bold text-foreground">River Chiu</span>
+          </button>
+
+          <div className="hidden md:flex items-center gap-8">
+            {[["Projekte", "projekte"], ["Qualifikationen", "qualifikationen"], ["Kontakt", "kontakt"]].map(([label, id]) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className="font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {label}
+              </button>
+            ))}
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-neutral-400 hover:text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle Menu"
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
-        {menuOpen && (
-          <div className="md:hidden bg-[#0D0D0D] border-b border-neutral-800 px-6 py-6 flex flex-col gap-4 text-sm uppercase tracking-widest text-neutral-400">
-            <a
-              href="#about"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-white transition-colors"
-            >
-              About
-            </a>
-            <a
-              href="#projects"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-white transition-colors"
-            >
-              Projects
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-white transition-colors"
-            >
-              Contact
-            </a>
+        <div
+          className="md:hidden overflow-hidden transition-all duration-300 bg-[rgba(8,8,8,0.98)] backdrop-blur-md"
+          style={{ 
+            maxHeight: menuOpen ? "220px" : "0px", 
+            borderBottom: menuOpen ? "1px solid rgba(240,237,230,0.07)" : "none"
+          }}
+        >
+          <div className="px-6 pb-6 pt-4 flex flex-col gap-5 border-t border-border">
+            {[["Projekte", "projekte"], ["Qualifikationen", "qualifikationen"], ["Kontakt", "kontakt"]].map(([label, id]) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className="font-display font-bold text-2xl uppercase text-left hover:text-primary transition-colors"
+              >
+                {label}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto flex flex-col justify-end min-h-[80vh]">
-        <div className="space-y-6 fade-in-on-scroll">
-          <p className="text-neutral-500 font-mono tracking-widest uppercase text-sm">
-            // Full-Stack Developer & UI Enthusiast
+      {/* ─── HERO ─── */}
+      <section id="hero" className="min-h-screen flex flex-col justify-start pt-32 pb-16 px-6 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(240,237,230,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(240,237,230,0.025) 1px, transparent 1px)",
+            backgroundSize: "72px 72px",
+          }}
+        />
+        <div
+          className="absolute right-[-2%] top-1/2 -translate-y-1/2 font-display font-black leading-none select-none pointer-events-none"
+          style={{ fontSize: "clamp(160px, 22vw, 320px)", color: "rgba(204,0,0,0.07)" }}
+        >
+          RC
+        </div>
+
+        <div className="max-w-6xl mx-auto w-full relative z-10">
+          <p className="font-mono text-xs tracking-widest text-primary mt-5 uppercase">
+            PORTFOLIO — SOFTWARE ENGINEERING & DESIGN | FLENSBURG
           </p>
-          <h1 className="text-5xl md:text-8xl font-serif font-normal tracking-tight text-white leading-tight">
-            Crafting digital <br />
-            experiences with precision.
+
+          <h1
+            className="font-display font-black uppercase leading-none mb-10"
+            style={{ fontSize: "clamp(3rem, 9.5vw, 9rem)", letterSpacing: "-0.01em" }}
+          >
+            UI/UX
+            <br />
+            <span className="text-primary">&amp; Software</span>
+            <br />
+            Engineering.
           </h1>
+
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
+            <p className="text-muted-foreground text-lg max-w-xl leading-relaxed" style={{ fontFamily: "inherit" }}>
+              Ich bin <em className="text-foreground">River Chiu</em> — IHK-zertifizierter Fachinformatiker
+              für Anwendungsentwicklung und erfahrener Grafikdesigner. Ich verbinde fundierte
+              Design-Expertise mit moderner Softwareentwicklung (Python, PHP, Odoo ERP).
+            </p>
+          </div>
+          <div className="mt-12 flex items-center gap-3">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <div className="flex flex-col">
+              <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
+                VERFÜGBAR AB AUGUST 2026
+              </span>
+              <span className="font-mono text-xs text-muted-foreground italic">
+                Master Wirtschaftsinformatik Online (HAW Kiel, ab Sept. 2026)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+          <span className="font-mono text-xs tracking-widest text-muted-foreground">Scroll</span>
+          <div className="w-px h-10 bg-muted-foreground animate-pulse" />
         </div>
       </section>
 
-      {/* Projects Section (Accordion Style) */}
-      <section id="projects" className="py-20 px-6 max-w-7xl mx-auto border-t border-neutral-800">
-        <h2 className="text-xs uppercase tracking-widest text-neutral-500 font-mono mb-12">
-          [ Selected Works ]
-        </h2>
+      {/* ─── PROJEKTE ─── */}
+      <section id="projekte" className="py-24 px-6 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="mb-14">
+            <span className="font-mono text-xs tracking-widest text-primary uppercase">01 — Projekte</span>
+            <h2
+              className="font-display font-black uppercase mt-3 leading-none"
+              style={{ fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)" }}
+            >
+              Ausgewählte
+              <br />
+              Arbeiten
+            </h2>
+          </Reveal>
 
-        <div className="space-y-4">
-          {PROJECTS.map((project) => {
-            const isOpen = activeProject === project.id;
-            return (
-              <div
-                key={project.id}
-                className="border-b border-neutral-800 transition-colors duration-300"
-              >
+          <div className="flex flex-col">
+            {PROJECTS.map((project, i) => (
+              <Reveal key={project.id} delay={i * 50}>
                 <div
-                  className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer group"
-                  onClick={() => setActiveProject(isOpen ? null : project.id)}
-                  role="button"
-                  aria-expanded={isOpen}
+                  className="group border-t border-border last:border-b cursor-pointer"
+                  onClick={() => setActiveProject(activeProject === project.id ? null : project.id)}
                 >
-                  <div className="flex items-baseline gap-6">
-                    <span className="font-mono text-neutral-600 text-sm">
-                      {project.num}
-                    </span>
-                    <h3
-                      className="text-2xl md:text-4xl font-serif group-hover:text-neutral-400 transition-colors flex items-center gap-2"
-                      onClick={(e) => {
-                        e.stopPropagation(); // 防止觸發手風琴展開
-                        setModalProject(project);
-                      }}
-                    >
-                      {project.title}
-                      <ArrowUpRight className="inline-block opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6 text-neutral-400" />
-                    </h3>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-sm text-neutral-500 font-mono">
-                    <span>{project.category}</span>
-                    <ChevronDown
-                      className={`transform transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </div>
-                </div>
-
-                {/* Accordion Content */}
-                {isOpen && (
-                  <div className="pb-8 pt-2 grid grid-cols-1 md:grid-cols-2 gap-8 items-start fade-in-on-scroll">
-                    <div>
-                      <p className="text-neutral-400 mb-6 leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs font-mono bg-neutral-900 border border-neutral-800 px-3 py-1 rounded-full text-neutral-300"
-                          >
-                            {tag}
+                  <div className="flex items-start justify-between py-6 gap-4">
+                    <div className="flex items-start gap-6 min-w-0">
+                      <span className="font-mono text-xs text-muted-foreground pt-1 shrink-0 w-5">
+                        0{i + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <h3
+                          className="font-display font-bold uppercase group-hover:text-primary transition-colors leading-tight cursor-pointer flex items-center gap-2"
+                          style={{ fontSize: "clamp(1.2rem, 2.8vw, 1.9rem)" }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setModalProject(project);
+                          }}
+                        >
+                          {project.title}
+                          <span className="text-xs font-mono text-primary border border-primary/40 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                            Details ↗
                           </span>
-                        ))}
+                        </h3>
+                        <p className="font-mono text-xs text-muted-foreground mt-1 tracking-wide">
+                          {project.description}
+                        </p>
+                        <p className="font-mono text-xs text-primary mt-1 tracking-widest uppercase">
+                          {project.context}
+                        </p>
                       </div>
-                      <button
-                        onClick={() => setModalProject(project)}
-                        className="inline-flex items-center gap-2 text-sm font-mono text-white underline underline-offset-4 hover:text-neutral-400 transition-colors"
-                      >
-                        View Project Details <ArrowUpRight size={16} />
-                      </button>
                     </div>
-
-                    <div className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900/50">
-                      <ImageWithFallback
-                        src={project.img}
-                        alt={project.title}
-                        className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                    <div className="flex items-center gap-4 shrink-0 pt-1">
+                      <span className="hidden md:block font-mono text-xs text-muted-foreground border border-border px-3 py-1 tracking-wider uppercase">
+                        {project.tag}
+                      </span>
+                      <span className="font-mono text-xs text-muted-foreground">{project.year}</span>
+                      <ArrowUpRight
+                        size={16}
+                        className="text-muted-foreground group-hover:text-primary transition-all duration-200"
+                        style={{
+                          transform: activeProject === project.id ? "rotate(90deg)" : "rotate(0deg)",
+                          transition: "transform 0.3s ease, color 0.2s",
+                        }}
                       />
                     </div>
                   </div>
-                )}
-              </div>
-            );
-          })}
+
+                  <div
+                    className="overflow-hidden transition-all duration-500"
+                    style={{ maxHeight: activeProject === project.id ? "500px" : "0px" }}
+                  >
+                    <div className="grid md:grid-cols-5 gap-6 pb-8 pl-11">
+                      <div className="md:col-span-3">
+                        <p className="text-muted-foreground leading-relaxed">{project.detail}</p>
+                        
+                        {project.link && (
+                          <div className="mt-4">
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 font-mono text-xs tracking-wider uppercase text-primary underline hover:opacity-80"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Flickr Album ansehen <ExternalLink size={14} />
+                            </a>
+                          </div>
+                        )}
+
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {project.stack.map((s) => (
+                            <span
+                              key={s}
+                              className="font-mono text-xs tracking-wider uppercase border border-border text-muted-foreground px-3 py-1 hover:border-primary hover:text-primary transition-colors"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="md:col-span-2 overflow-hidden bg-muted" style={{ height: "180px" }}>
+                        <img
+                          src={project.img}
+                          alt={project.title}
+                          className={`w-full h-full opacity-70 group-hover:opacity-90 transition-opacity duration-500 ${
+                            project.id === 4 ? 'object-contain' : 'object-cover'
+                          }`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Modal Window */}
+      {/* ─── QUALIFIKATIONEN ─── */}
+      <section id="qualifikationen" className="py-24 px-6 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="mb-14">
+            <span className="font-mono text-xs tracking-widest text-primary uppercase">02 — Qualifikationen</span>
+            <h2
+              className="font-display font-black uppercase mt-3 leading-none"
+              style={{ fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)" }}
+            >
+              Bildung &amp;
+              <br />
+              Kompetenzen
+            </h2>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-16">
+            <div>
+              <Reveal>
+                <p className="font-mono text-xs tracking-widest text-primary uppercase mb-6">Ausbildung</p>
+              </Reveal>
+              <div className="flex flex-col gap-0">
+                {QUALIFICATIONS.map((q, i) => (
+                  <Reveal key={q.title} delay={i * 60}>
+                    <div className="border-t border-border py-5 last:border-b">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="font-display font-bold uppercase text-lg leading-tight">{q.title}</h3>
+                          <p className="font-mono text-xs text-primary tracking-widest uppercase mt-1">{q.org}</p>
+                          <p className="text-muted-foreground text-sm mt-1">{q.note}</p>
+                        </div>
+                        <span className="font-mono text-xs text-muted-foreground shrink-0">{q.period}</span>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <Reveal>
+                <p className="font-mono text-xs tracking-widest text-primary uppercase mb-6">Kompetenzen</p>
+              </Reveal>
+              <div className="flex flex-col gap-6">
+                {SKILLS.map((group, i) => (
+                  <Reveal key={group.group} delay={i * 60}>
+                    <div>
+                      <p className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-3">
+                        {group.group}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {group.items.map((skill) => (
+                          <span
+                            key={skill}
+                            className="font-mono text-xs tracking-wider uppercase px-3 py-1 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors cursor-default"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── KONTAKT ─── */}
+      <section id="kontakt" className="py-24 px-6 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="mb-14">
+            <span className="font-mono text-xs tracking-widest text-primary uppercase">03 — Kontakt</span>
+            <h2
+              className="font-display font-black uppercase mt-3 leading-none"
+              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+            >
+              Lass uns
+              <br />
+              <span className="text-primary">reden.</span>
+            </h2>
+            <p className="text-muted-foreground mt-5 max-w-md leading-relaxed">
+              Du hast ein Projekt oder eine Idee? Ich freue mich über deine Nachricht — ob 
+              Teilzeit oder Vollzeit ab August 2026.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl">
+            {[
+              { label: "E-Mail", value: "river.chiu@yahoo.de", href: "mailto:river.chiu@yahoo.de" },
+              { label: "GitHub", value: "github.com/riverchiu-dev", href: "https://github.com/riverchiu-dev" },
+              { label: "Standort", value: "Flensburg, Deutschland (Remote-fähig)", href: "https://www.google.com/maps/place/Flensburg" },
+            ].map(({ label, value, href }, i) => (
+              <Reveal key={label} delay={i * 60}>
+                <a
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between p-5 border border-border hover:border-primary transition-colors duration-200"
+                >
+                  <div>
+                    <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase mb-1">{label}</p>
+                    <p className="text-foreground group-hover:text-primary transition-colors text-sm">{value}</p>
+                  </div>
+                  <ArrowUpRight
+                    size={16}
+                    className="text-muted-foreground group-hover:text-primary transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="border-t border-border py-6 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Nach oben" className="flex items-center gap-2">
+            <ImageWithFallback
+              src="/images/40x40.jpg"
+              alt="river. Logo"
+              className="w-7 h-7 object-cover rounded-full opacity-60 hover:opacity-100 transition-opacity"
+            />
+            <span className="font-mono text-xs text-muted-foreground">River Chiu</span>
+          </button>
+          <p className="font-mono text-xs text-muted-foreground text-center">
+            © 2026 River Chiu — Fachinformatiker für Anwendungsentwicklung · Flensburg
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-primary transition-colors"
+          >
+            Nach oben ↑
+          </button>
+        </div>
+      </footer>
       {modalProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
           onClick={() => setModalProject(null)}
         >
           <div
-            className="bg-[#121212] border border-neutral-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 space-y-6 relative text-neutral-200"
+            className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-start border-b border-neutral-800 pb-4">
-              <div>
-                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest">
-                  {modalProject.category} — {modalProject.year}
-                </span>
-                <h2 className="text-3xl font-serif text-white mt-1">
-                  {modalProject.title}
-                </h2>
-              </div>
-              <button
-                onClick={() => setModalProject(null)}
-                className="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-colors"
-                aria-label="Close modal"
-              >
-                <X size={20} />
-              </button>
+            <button
+              onClick={() => setModalProject(null)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors p-2"
+              aria-label="Schließen"
+            >
+              <X size={20} />
+            </button>
+            <div className="mb-4">
+              <span className="font-mono text-xs text-primary uppercase tracking-widest">
+                {modalProject.context} · {modalProject.year}
+              </span>
+              <h2 className="font-display font-bold text-2xl md:text-3xl uppercase text-foreground mt-1">
+                {modalProject.title}
+              </h2>
+              <span className="inline-block font-mono text-xs text-muted-foreground border border-border px-2 py-0.5 mt-2 uppercase">
+                {modalProject.tag}
+              </span>
             </div>
-
-            <div className="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900">
-              <ImageWithFallback
+            <div className="my-6 border border-border bg-muted overflow-hidden">
+              <img
                 src={modalProject.img}
                 alt={modalProject.title}
                 className="w-full h-auto max-h-[350px] object-cover"
               />
             </div>
-
-            <div className="space-y-4">
-              <h3 className="text-sm font-mono text-neutral-400 uppercase tracking-wider">
-                Overview & Key Features
-              </h3>
-              <ul className="list-disc list-inside space-y-2 text-neutral-300 leading-relaxed text-sm">
-                {modalProject.details.map((detail, idx) => (
-                  <li key={idx}>{detail}</li>
-                ))}
-              </ul>
+            <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
+              <h4 className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
+                Projekt-Details &amp; User Flow
+              </h4>
+              <p>{modalProject.detail}</p>
             </div>
-
-            <div className="pt-4 border-t border-neutral-800 flex flex-wrap gap-4 justify-between items-center">
-              <div className="flex gap-2">
-                {modalProject.tags.map((tag) => (
+            <div className="mt-6 pt-4 border-t border-border">
+              <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-2">
+                Technologies
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {modalProject.stack.map((s) => (
                   <span
-                    key={tag}
-                    className="text-xs font-mono bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded text-neutral-400"
+                    key={s}
+                    className="font-mono text-xs border border-border text-foreground px-2.5 py-1"
                   >
-                    {tag}
+                    {s}
                   </span>
                 ))}
               </div>
-
-              <div className="flex items-center gap-3">
-                {modalProject.githubUrl && (
-                  <a
-                    href={modalProject.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-mono bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg transition-colors"
-                  >
-                    <Github size={14} /> GitHub
-                  </a>
-                )}
-                {modalProject.demoUrl && (
-                  <a
-                    href={modalProject.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-mono bg-white hover:bg-neutral-200 text-black px-4 py-2 rounded-lg font-medium transition-colors"
-                  >
-                    <ExternalLink size={14} /> Live Demo
-                  </a>
-                )}
-              </div>
+            </div>
+            <div className="mt-8 flex gap-4">
+              {modalProject.link && (
+                <a
+                  href={modalProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+                >
+                  Link öffnen <ExternalLink size={14} />
+                </a>
+              )}
+              <button
+                onClick={() => setModalProject(null)}
+                className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Schließen
+              </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* Footer / Contact */}
-      <footer id="contact" className="py-20 px-6 max-w-7xl mx-auto border-t border-neutral-800">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
-          <div>
-            <h2 className="text-xs uppercase tracking-widest text-neutral-500 font-mono mb-4">
-              [ Get in Touch ]
-            </h2>
-            <a
-              href="mailto:contact@example.com"
-              className="text-3xl md:text-5xl font-serif hover:text-neutral-400 transition-colors inline-flex items-center gap-3"
-            >
-              Let's work together <Mail className="w-8 h-8" />
-            </a>
-          </div>
-
-          <div className="flex items-center gap-6 font-mono text-sm text-neutral-500">
-            <a href="#" className="hover:text-white transition-colors">
-              GitHub
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              LinkedIn
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Twitter
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
