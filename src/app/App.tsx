@@ -136,6 +136,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
       <style>{`
+        :root {
+          --muted-foreground: #cccccc;
+        }
         .font-display { font-family: 'Barlow Condensed', Arial Narrow, sans-serif; }
         .font-mono   { font-family: 'DM Mono', monospace; }
         ::-webkit-scrollbar { width: 3px; }
