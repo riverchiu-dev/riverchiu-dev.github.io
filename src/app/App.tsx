@@ -205,7 +205,7 @@ export default function App() {
       </nav>
 
       {/* ─── HERO ─── */}
-      <section id="hero" className="min-h-screen flex flex-col justify-end pb-16 px-6 relative overflow-hidden">
+      <section id="hero" className="min-h-screen flex flex-col justify-start pt-32 pb-16 px-6 relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
