@@ -77,7 +77,7 @@ const QUALIFICATIONS = [
   {
     title: "B.A. ACCOUNTING",
     org: "China University of Technology (Mit ZAB-Zeugnisbewertung)",
-    period: "Abgeschlossen",
+    period: "2007 - 2011",
     note: "Fundierter betriebswirtschaftlicher Hintergrund & praktische Bank-/Buchhaltungserfahrung",
   },
 ];
@@ -121,6 +121,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [modalProject, setModalProject] = useState<typeof PROJECTS[0] | null>(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48);
@@ -294,10 +295,16 @@ export default function App() {
                       </span>
                       <div className="min-w-0">
                         <h3
-                          className="font-display font-bold uppercase group-hover:text-primary transition-colors leading-tight"
+                          className="font-display font-bold uppercase group-hover:text-primary transition-colors leading-tight cursor-pointer flex items-center gap-2"
                           style={{ fontSize: "clamp(1.2rem, 2.8vw, 1.9rem)" }}
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                            setModalProject(project);
                         >
                           {project.title}
+                            <span className="text-xs font-mono text-primary border border-primary/40 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                              Details ↗
+                            </span>
                         </h3>
                         <p className="font-mono text-xs text-muted-foreground mt-1 tracking-wide">
                           {project.description}
@@ -512,5 +519,81 @@ export default function App() {
         </div>
       </footer>
     </div>
+    {modalProject && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
+          onClick={() => setModalProject(null)}
+        >
+          <div
+            className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setModalProject(null)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors p-2"
+              aria-label="Schließen"
+            >
+              <X size={20} />
+            </button>
+            <div className="mb-4">
+              <span className="font-mono text-xs text-primary uppercase tracking-widest">
+                {modalProject.context} · {modalProject.year}
+              </span>
+              <h2 className="font-display font-bold text-2xl md:text-3xl uppercase text-foreground mt-1">
+                {modalProject.title}
+              </h2>
+              <span className="inline-block font-mono text-xs text-muted-foreground border border-border px-2 py-0.5 mt-2 uppercase">
+                {modalProject.tag}
+              </span>
+            </div>
+            <div className="my-6 border border-border bg-muted overflow-hidden">
+              <img
+                src={modalProject.img}
+                alt={modalProject.title}
+                className="w-full h-auto max-h-[350px] object-cover"
+              />
+            </div>
+            <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
+              <h4 className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
+                Projekt-Details &amp; User Flow
+              </h4>
+              <p>{modalProject.detail}</p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-border">
+              <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-2">
+                Technologies
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {modalProject.stack.map((s) => (
+                  <span
+                    key={s}
+                    className="font-mono text-xs border border-border text-foreground px-2.5 py-1"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-8 flex gap-4">
+              {modalProject.link && (
+                <a
+                  href={modalProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+                >
+                  Link öffnen <ExternalLink size={14} />
+                </a>
+              )}
+              <button
+                onClick={() => setModalProject(null)}
+                className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Schließen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
   );
 }
