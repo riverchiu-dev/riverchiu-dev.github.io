@@ -298,13 +298,14 @@ export default function App() {
                           className="font-display font-bold uppercase group-hover:text-primary transition-colors leading-tight cursor-pointer flex items-center gap-2"
                           style={{ fontSize: "clamp(1.2rem, 2.8vw, 1.9rem)" }}
                           onClick={(e) => {
-                            e.stopPropagation(); 
+                            e.stopPropagation();
                             setModalProject(project);
+                          }}
                         >
                           {project.title}
-                            <span className="text-xs font-mono text-primary border border-primary/40 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                              Details ↗
-                            </span>
+                          <span className="text-xs font-mono text-primary border border-primary/40 px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                            Details ↗
+                          </span>
                         </h3>
                         <p className="font-mono text-xs text-muted-foreground mt-1 tracking-wide">
                           {project.description}
