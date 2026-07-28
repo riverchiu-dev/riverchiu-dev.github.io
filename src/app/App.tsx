@@ -519,8 +519,7 @@ export default function App() {
           </button>
         </div>
       </footer>
-    </div>
-    {modalProject && (
+      {modalProject && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
           onClick={() => setModalProject(null)}
@@ -596,5 +595,6 @@ export default function App() {
           </div>
         </div>
       )}
+    </div>
   );
 }
