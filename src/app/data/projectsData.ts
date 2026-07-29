@@ -18,11 +18,7 @@ export const PROJECTS: Project[] = [
     tag: "ERP / UI Extension",
     context: "IHK-Abschlussprojekt · humanilog",
     description: "ERP UI/UX-Erweiterung, Wizard-Design & QWeb-Integration für multilokale NGO-Prozesse.",
-    detail: `Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das dynamische Drucken mehrsprachiger Dokumente (Angebote, Rechnungen, Lieferscheine). Offizielles IHK-Abschlussprojekt der Ausbildung zum Fachinformatiker für Anwendungsentwicklung.
-
-    • Kontextbasierte Steuerung: Zentrale Erweiterung von ir.actions.report zur Sprachinjektion in QWeb-PDF-Berichte.
-    • Mehrstufige Fallback-Logik: Absicherung über automatische Sprachermittlung (Kunden- → Firmen- → Benutzer-Sprache → en_US).
-    • Qualitätsstandard: Vollständige Implementierung nach IHK-Vorgaben inkl. automatisierter Unit Tests.`,
+    detail: `Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das dynamische Drucken mehrsprachiger Dokumente (Angebote, Rechnungen, Lieferscheine). Offizielles IHK-Abschlussprojekt der Ausbildung zum Fachinformatiker für Anwendungsentwicklung.`,
     stack: ["Odoo 16", "Python", "QWeb", "XML", "ORM / PostgreSQL", "Unit Testing", "UI/UX"],
     img: "images/Odoo-wizard.png",
     link: "https://github.com/riverchiu-dev/odoo-dev",
