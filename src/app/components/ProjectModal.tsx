@@ -1,5 +1,6 @@
 import React from "react";
 import { X, ExternalLink } from "lucide-react";
+import { FaGithub } from "react-icons/fa"; 
 import { Project } from "@/app/data/projectsData";
 
 interface ProjectModalProps {
@@ -16,7 +17,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       onClick={onClose}
     >
       <div
-        className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm"
+        className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm text-neutral-100"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -49,9 +50,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
         <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
           <h4 className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-            Projekt-Details &amp; User Flow
+            Projekt-Details &amp; Highlights
           </h4>
-          <p>{project.detail}</p>
+          <p className="whitespace-pre-line">{project.detail}</p>
         </div>
 
         <div className="mt-6 pt-4 border-t border-border">
@@ -70,20 +71,21 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
         </div>
 
-        <div className="mt-8 flex gap-4">
+        <div className="mt-8 flex flex-wrap gap-4">
           {project.link && (
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+              className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-white text-black font-semibold hover:bg-neutral-200 transition-colors flex items-center gap-2 rounded-sm"
             >
-              Link öffnen <ExternalLink size={14} />
+              <FaGithub size={16} />
+              Code auf GitHub <ExternalLink size={13} />
             </a>
           )}
           <button
             onClick={onClose}
-            className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors"
+            className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors rounded-sm"
           >
             Schließen
           </button>

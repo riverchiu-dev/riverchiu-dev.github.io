@@ -22,6 +22,7 @@ export const PROJECTS: Project[] = [
       "Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das Drucken mehrsprachiger Dokumente. Entwicklung eines interaktiven Wizards mit QWeb-Vorlagen, angepasster UI-Sprache und nahtloser Integration in bestehende NGO-Workflows bei humanilog. Abschlussprojekt der IHK-Ausbildung.",
     stack: ["Odoo 16", "Python", "QWeb", "XML", "UI/UX"],
     img: "images/Odoo-wizard.png",
+    links: "https://github.com/riverchiu-dev/odoo-dev"
     year: "2026",
   },
   {
@@ -34,6 +35,7 @@ export const PROJECTS: Project[] = [
       "Entwicklung einer vollständigen Web-Applikation zur Urlaubsverwaltung mit rollenbasiertem Zugriffskonzept für Mitarbeiter und Administratoren. Inklusive Datenbankmodellierung (SQL), interaktiver Dashboards und UX-Wireframing für alle Nutzerrollen.",
     stack: ["PHP", "SQL", "HTML/CSS", "Wireframing"],
     img: "images/120968068-h-720.jpg",
+    links: "https://github.com/riverchiu-dev/WEBANWENDUNG-MIT-SQL---URLAUBSVERWALTUNG"
     year: "2025",
   },
   {
@@ -46,6 +48,7 @@ export const PROJECTS: Project[] = [
       "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
     stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
     img: "images/supermarkt01.jpg",
+    links: "https://github.com/riverchiu-dev/Supermarkt-Applikation-in-Python"
     year: "2025",
   },
   {
