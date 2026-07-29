@@ -1,6 +1,6 @@
 import React from "react";
 import { X, ExternalLink } from "lucide-react";
-import { FaGithub, FaFlickr } from "react-icons/fa"; 
+import { FaGithub } from "react-icons/fa"; 
 import { Project } from "@/app/data/projectsData";
 
 interface ProjectModalProps {
@@ -8,9 +8,18 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+// 經典的 Flickr 雙色圓點元件
+const FlickrIcon = () => (
+  <span className="inline-flex items-center gap-[2px] mr-0.5">
+    <span className="w-2.5 h-2.5 rounded-full bg-[#0063DC]" />
+    <span className="w-2.5 h-2.5 rounded-full bg-[#FF0084]" />
+  </span>
+);
+
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
+  // 判斷連結是否為 Flickr 相簿
   const isFlickr = project.link?.includes("flickr.com");
 
   return (
@@ -83,7 +92,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             >
               {isFlickr ? (
                 <>
-                  <FaFlickr size={16} />
+                  <FlickrIcon />
                   Portfolio auf Flickr
                 </>
               ) : (
