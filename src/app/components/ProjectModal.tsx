@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Project } from '../data/projectsData';
+import React from "react";
+import { X, ExternalLink } from "lucide-react";
+import { Project } from "@/app/data/projectsData";
 
 interface ProjectModalProps {
   project: Project | null;
@@ -7,114 +8,86 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'tech' | 'features'>('overview');
-
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-neutral-900 text-white rounded-xl border border-neutral-800 p-6 shadow-2xl">
-        
-        {/* Header Section */}
-        <div className="flex justify-between items-start border-b border-neutral-800 pb-4">
-          <div>
-            <span className="text-xs font-mono text-red-500 uppercase tracking-widest">
-              {project.badge}
-            </span>
-            <h2 className="text-2xl font-bold mt-1">{project.title}</h2>
-            <div className="flex flex-wrap gap-2 mt-3">
-              {project.tags.map((tag) => (
-                <span key={tag} className="px-2.5 py-1 bg-neutral-800 text-xs rounded-md text-neutral-300 font-mono">
-                  {tag}
-                </span>
-              ))}
-            </div>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors p-2"
+          aria-label="Schließen"
+        >
+          <X size={20} />
+        </button>
+
+        <div className="mb-4">
+          <span className="font-mono text-xs text-primary uppercase tracking-widest">
+            {project.context} · {project.year}
+          </span>
+          <h2 className="font-display font-bold text-2xl md:text-3xl uppercase text-foreground mt-1">
+            {project.title}
+          </h2>
+          <span className="inline-block font-mono text-xs text-muted-foreground border border-border px-2 py-0.5 mt-2 uppercase">
+            {project.tag}
+          </span>
+        </div>
+
+        <div className="my-6 border border-border bg-muted overflow-hidden">
+          <img
+            src={project.img}
+            alt={project.title}
+            className="w-full h-auto max-h-[350px] object-cover"
+          />
+        </div>
+
+        <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
+          <h4 className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
+            Projekt-Details &amp; User Flow
+          </h4>
+          <p>{project.detail}</p>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-border">
+          <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-2">
+            Technologies
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {project.stack.map((s) => (
+              <span
+                key={s}
+                className="font-mono text-xs border border-border text-foreground px-2.5 py-1"
+              >
+                {s}
+              </span>
+            ))}
           </div>
-          <button 
-            onClick={onClose} 
-            className="text-neutral-400 hover:text-white text-xl font-bold p-1 rounded-lg hover:bg-neutral-800 transition-colors"
-          >
-            ✕
-          </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex border-b border-neutral-800 mt-4 gap-6 text-sm">
-          <button 
-            className={`pb-2 transition-colors ${activeTab === 'overview' ? 'border-b-2 border-red-500 font-bold text-white' : 'text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            Überblick
-          </button>
-          <button 
-            className={`pb-2 transition-colors ${activeTab === 'tech' ? 'border-b-2 border-red-500 font-bold text-white' : 'text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('tech')}
-          >
-            Technische Details
-          </button>
-          <button 
-            className={`pb-2 transition-colors ${activeTab === 'features' ? 'border-b-2 border-red-500 font-bold text-white' : 'text-neutral-400 hover:text-white'}`}
-            onClick={() => setActiveTab('features')}
-          >
-            Kernfunktionen
-          </button>
-        </div>
-
-        {/* Tab Content */}
-        <div className="py-6 text-neutral-300 space-y-4 text-sm leading-relaxed min-h-[160px]">
-          {activeTab === 'overview' && (
-            <div>
-              <p className="mb-4 text-neutral-200">{project.overview}</p>
-              <div className="bg-neutral-800/50 p-4 rounded-lg border border-neutral-700/50">
-                <h4 className="font-semibold text-white mb-1">Problemstellung & Ziel:</h4>
-                <p className="text-neutral-400 text-xs">{project.problem}</p>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'tech' && (
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white mb-2">Implementierung & Architektur:</h4>
-              <ul className="list-disc pl-5 space-y-1.5 text-xs text-neutral-300">
-                {project.techDetails.map((detail, idx) => (
-                  <li key={idx}>{detail}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {activeTab === 'features' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              {project.features.map((feat, idx) => (
-                <div key={idx} className="border border-neutral-800 p-3 rounded-lg bg-neutral-900/50">
-                  <span className="font-bold text-white block mb-1">{feat.title}</span>
-                  <p className="text-neutral-400">{feat.desc}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Footer Actions */}
-        <div className="flex justify-between items-center border-t border-neutral-800 pt-4 mt-2">
-          {project.githubUrl ? (
-            <a 
-              href={project.githubUrl} 
-              target="_blank" 
+        <div className="mt-8 flex gap-4">
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-xs transition-colors flex items-center gap-2"
+              className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
             >
-              GitHub Repository ↗
+              Link öffnen <ExternalLink size={14} />
             </a>
-          ) : <div />}
-          <button 
+          )}
+          <button
             onClick={onClose}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg text-xs transition-colors"
+            className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
             Schließen
           </button>
         </div>
-
       </div>
     </div>
   );

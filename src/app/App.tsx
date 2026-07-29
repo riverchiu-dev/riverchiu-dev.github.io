@@ -1,58 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, Menu, X, ExternalLink } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-
-const PROJECTS = [
-  {
-    id: 1,
-    title: "Entwicklung von Druckspracheneinstellungen für Odoo 16.0",
-    tag: "ERP / UI Extension",
-    context: "IHK-Abschlussprojekt · humanilog",
-    description: "ERP UI/UX-Erweiterung, Wizard-Design & QWeb-Integration für multilokale NGO-Prozesse.",
-    detail:
-      "Konzeption und Umsetzung einer Odoo 16.0-Erweiterung für das Drucken mehrsprachiger Dokumente. Entwicklung eines interaktiven Wizards mit QWeb-Vorlagen, angepasster UI-Sprache und nahtloser Integration in bestehende NGO-Workflows bei humanilog. Abschlussprojekt der IHK-Ausbildung.",
-    stack: ["Odoo 16", "Python", "QWeb", "XML", "UI/UX"],
-    img: "images/Odoo-wizard.png",
-    year: "2026",
-  },
-  {
-    id: 2,
-    title: "Webanwendung mit SQL: Urlaubsverwaltung",
-    tag: "Web-App / Fullstack",
-    context: "Umschulungsprojekt (Teamarbeit)",
-    description: "Web-Anwendung (PHP/SQL) mit Rollenkonzept (User/Admin), Dashboards & Wireframing.",
-    detail:
-      "Entwicklung einer vollständigen Web-Applikation zur Urlaubsverwaltung mit rollenbasiertem Zugriffskonzept für Mitarbeiter und Administratoren. Inklusive Datenbankmodellierung (SQL), interaktiver Dashboards und UX-Wireframing für alle Nutzerrollen.",
-    stack: ["PHP", "SQL", "HTML/CSS", "Wireframing"],
-    img: "images/120968068-h-720.jpg",
-    year: "2025",
-  },
-  {
-    id: 3,
-    title: "Supermarkt-Applikation in Python",
-    tag: "Desktop GUI / Python",
-    context: "Umschulungsprojekt",
-    description: "Python/Tkinter GUI-Layout mit Rollentrennung für Kunden, Mitarbeiter und Manager.",
-    detail:
-      "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
-    stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
-    img: "images/supermarkt01.jpg",
-    year: "2025",
-  },
-  {
-    id: 4,
-    title: "Corporate Design & Visuelle Kommunikation",
-    tag: "Grafikdesign / Branding",
-    context: "Flickr Portfolio & Print Media",
-    description: "Konzeption und Gestaltung von Corporate-Design-Medien, Illustrationen & Web-Assets.",
-    detail:
-      "Ausgewählte visuelle und grafische Arbeiten (u. a. aus 2015). Umfangreiche Sammlung visueller und grafischer Arbeiten (Skizzieren, Malerei, Branding). Konzeption von Printmedien und digitalen Assets mit Adobe Photoshop, Illustrator und traditionellen Medien.",
-    stack: ["Adobe Illustrator", "Photoshop", "Skizzieren", "Branding"],
-    img: "images/grafikdesign02.jpg",
-    link: "https://www.flickr.com/photos/riversworld/albums/72157632154583025/",
-    year: "2015",
-  },
-];
+import { PROJECTS, Project } from "@/app/data/projectsData";
+import { ProjectModal } from "@/app/components/ProjectModal";
 
 const SKILLS = [
   { group: "Design", items: ["UI/UX Wireframing", "Figma", "Adobe Illustrator", "Adobe Photoshop", "Corporate Design", "Skizzieren"] },
@@ -121,7 +71,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
-  const [modalProject, setModalProject] = useState<typeof PROJECTS[0] | null>(null);
+  const [modalProject, setModalProject] = useState<Project | null>(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48);
@@ -519,82 +469,10 @@ export default function App() {
           </button>
         </div>
       </footer>
-      {modalProject && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity"
-          onClick={() => setModalProject(null)}
-        >
-          <div
-            className="bg-[#121212] border border-border max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl rounded-sm"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setModalProject(null)}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-primary transition-colors p-2"
-              aria-label="Schließen"
-            >
-              <X size={20} />
-            </button>
-            <div className="mb-4">
-              <span className="font-mono text-xs text-primary uppercase tracking-widest">
-                {modalProject.context} · {modalProject.year}
-              </span>
-              <h2 className="font-display font-bold text-2xl md:text-3xl uppercase text-foreground mt-1">
-                {modalProject.title}
-              </h2>
-              <span className="inline-block font-mono text-xs text-muted-foreground border border-border px-2 py-0.5 mt-2 uppercase">
-                {modalProject.tag}
-              </span>
-            </div>
-            <div className="my-6 border border-border bg-muted overflow-hidden">
-              <img
-                src={modalProject.img}
-                alt={modalProject.title}
-                className="w-full h-auto max-h-[350px] object-cover"
-              />
-            </div>
-            <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
-              <h4 className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-                Projekt-Details &amp; User Flow
-              </h4>
-              <p>{modalProject.detail}</p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-border">
-              <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-2">
-                Technologies
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {modalProject.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="font-mono text-xs border border-border text-foreground px-2.5 py-1"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="mt-8 flex gap-4">
-              {modalProject.link && (
-                <a
-                  href={modalProject.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs tracking-widest uppercase px-5 py-3 bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
-                >
-                  Link öffnen <ExternalLink size={14} />
-                </a>
-              )}
-              <button
-                onClick={() => setModalProject(null)}
-                className="font-mono text-xs tracking-widest uppercase px-5 py-3 border border-border text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Schließen
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ProjectModal
+        project={modalProject}
+        onClose={() => setModalProject(null)}
+      />
     </div>
   );
 }
