@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
       "Entwurf und Implementierung einer Desktop-Anwendung mit Python und Tkinter. Separate Benutzeroberflächen und Funktionsbereiche für drei Rollen: Kunden (Produktsuche, Warenkorb), Mitarbeiter (Lagerverwaltung) und Manager (Reporting, Benutzerverwaltung).",
     stack: ["Python", "Tkinter", "GUI Design", "UX Flows"],
     img: "images/supermarkt01.jpg",
-    links: "https://github.com/riverchiu-dev/Supermarkt-Applikation-in-Python",
+    link: "https://github.com/riverchiu-dev/Supermarkt-Applikation-in-Python",
     year: "2025",
   },
   {
