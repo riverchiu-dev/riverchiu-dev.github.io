@@ -25,7 +25,7 @@ export const PROJECTS: Project[] = [
     • Qualitätsstandard: Vollständige Implementierung nach IHK-Vorgaben inkl. automatisierter Unit Tests.`,
     stack: ["Odoo 16", "Python", "QWeb", "XML", "ORM / PostgreSQL", "Unit Testing", "UI/UX"],
     img: "images/Odoo-wizard.png",
-    links: "https://github.com/riverchiu-dev/odoo-dev",
+    link: "https://github.com/riverchiu-dev/odoo-dev",
     year: "2026",
   },
   {
@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
       "Entwicklung einer vollständigen Web-Applikation zur Urlaubsverwaltung mit rollenbasiertem Zugriffskonzept für Mitarbeiter und Administratoren. Inklusive Datenbankmodellierung (SQL), interaktiver Dashboards und UX-Wireframing für alle Nutzerrollen.",
     stack: ["PHP", "SQL", "HTML/CSS", "Wireframing"],
     img: "images/120968068-h-720.jpg",
-    links: "https://github.com/riverchiu-dev/WEBANWENDUNG-MIT-SQL---URLAUBSVERWALTUNG",
+    link: "https://github.com/riverchiu-dev/WEBANWENDUNG-MIT-SQL---URLAUBSVERWALTUNG",
     year: "2025",
   },
   {
