@@ -1,6 +1,6 @@
 import React from "react";
-import { X, ExternalLink, Image as ImageIcon } from "lucide-react";
-import { FaGithub } from "react-icons/fa"; 
+import { X, ExternalLink } from "lucide-react";
+import { FaGithub, FaFlickr } from "react-icons/fa"; 
 import { Project } from "@/app/data/projectsData";
 
 interface ProjectModalProps {
@@ -11,7 +11,6 @@ interface ProjectModalProps {
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
-  // 判斷連結是否為 Flickr 相簿
   const isFlickr = project.link?.includes("flickr.com");
 
   return (
@@ -84,7 +83,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             >
               {isFlickr ? (
                 <>
-                  <ImageIcon size={16} />
+                  <FaFlickr size={16} />
                   Portfolio auf Flickr
                 </>
               ) : (
