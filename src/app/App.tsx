@@ -78,7 +78,7 @@ export default function App() {
     useEffect(() => {
       const getStoredViews = () => {
         const stored = localStorage.getItem("site_views_count");
-        return stored ? parseInt(stored, 10) : 100; // 預設底數從 100 開始
+        return stored ? parseInt(stored, 10) : 0000;
       };
   
       fetch("https://api.counterapi.dev/v1/riverchiu_portfolio_2026/visits/up")
