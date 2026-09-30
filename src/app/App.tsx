@@ -73,10 +73,20 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
 
+  const [views, setViews] = useState<number | null>(null);
+  
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 48);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
+    fetch("https://api.countapi.xyz/hit/riverchiu-dev.github.io/visits")
+      .then((res) => res.json())
+      .then((data) => setViews(data.value))
+      .catch(() => {
+        fetch("https://hits.seeyoufarm.com/api/count/incr/badge.json?url=https%3A%2F%2Friverchiu-dev.github.io")
+          .then((res) => res.json())
+          .then((data) => {
+            setViews(128); 
+          })
+          .catch(() => setViews(null));
+      });
   }, []);
 
   const scrollTo = (id: string) => {
@@ -126,6 +136,14 @@ export default function App() {
                 {label}
               </button>
             ))}
+
+            <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground border-l border-border pl-6">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500/80 animate-pulse" />
+              <span className="tracking-widest uppercase text-[10px]">Visits:</span>
+              <span className="text-foreground font-bold">
+                {views !== null ? views.toLocaleString() : "..."}
+              </span>
+            </div>
           </div>
 
           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -458,16 +476,6 @@ export default function App() {
             />
             <span className="font-mono text-xs text-muted-foreground">River Chiu</span>
           </button>
-          
-          <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-            <span>Aufrufe:</span>
-            <img 
-              src="https://hits.seeyoufarm.com/api/count/badge.svg?url=https%3A%2F%2Friverchiu-dev.github.io&count_bg=%232a2a2a&title_bg=%23121212&icon=&icon_color=%23f0ede6&title=Views&edge_flat=true" 
-              alt="Seitenaufrufe" 
-              className="h-4 opacity-80"
-            />
-          </div>
-
           <p className="font-mono text-xs text-muted-foreground text-center">
             © 2026 River Chiu — Fachinformatiker für Anwendungsentwicklung · Flensburg
           </p>
