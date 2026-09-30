@@ -73,20 +73,31 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
   
-  const [views, setViews] = useState<string>("0000");
+  const [views, setViews] = useState<string>("0001");
   
     useEffect(() => {
-      fetch("https://api.counterapi.dev/v1/riverchiu-portfolio/visits/up")
-        .then((res) => res.json())
+      const getStoredViews = () => {
+        const stored = localStorage.getItem("site_views_count");
+        return stored ? parseInt(stored, 10) : 100; // 預設底數從 100 開始
+      };
+  
+      fetch("https://api.counterapi.dev/v1/riverchiu_portfolio_2026/visits/up")
+        .then((res) => {
+          if (!res.ok) throw new Error("Network response was not ok");
+          return res.json();
+        })
         .then((data) => {
-          if (data && data.count) {
-            setViews(String(data.count).padStart(4, "0"));
+          if (data && typeof data.count === "number") {
+            const countStr = String(data.count).padStart(4, "0");
+            setViews(countStr);
+            localStorage.setItem("site_views_count", String(data.count));
           }
         })
-        .catch(() => {
-          const localViews = Number(localStorage.getItem("page_views") || "128") + 1;
-          localStorage.setItem("page_views", String(localViews));
-          setViews(String(localViews).padStart(4, "0"));
+        .catch((err) => {
+          console.warn("Counter API offline or blocked, using local fallback:", err);
+          const nextViews = getStoredViews() + 1;
+          localStorage.setItem("site_views_count", String(nextViews));
+          setViews(String(nextViews).padStart(4, "0"));
         });
     }, []);
 
@@ -137,21 +148,21 @@ export default function App() {
                 {label}
               </button>
             ))}
-            <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
-              <svg 
-                className="w-4 h-4 text-muted-foreground/80" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            
-              <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
-                {views}
-              </span>
+              <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
+                <svg 
+                  className="w-4 h-4 text-muted-foreground/80" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              
+                <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
+                  {views}
+                </span>
             </div>
           </div>
 
