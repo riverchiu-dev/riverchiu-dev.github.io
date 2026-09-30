@@ -73,12 +73,12 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
   
-  const [views, setViews] = useState<string>("0001");
+  const [views, setViews] = useState<string>("0000");
   
     useEffect(() => {
       const getStoredViews = () => {
         const stored = localStorage.getItem("site_views_count");
-        return stored ? parseInt(stored, 10) : 0000;
+        return stored ? parseInt(stored, 10) : 0;
       };
   
       fetch("https://api.counterapi.dev/v1/riverchiu_portfolio_2026/visits/up")
