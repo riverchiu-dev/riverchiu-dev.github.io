@@ -15,7 +15,7 @@ const QUALIFICATIONS = [
   {
     title: "M.Sc. Wirtschaftsinformatik Online",
     org: "HAW Kiel",
-    period: "ab September 2026",
+    period: "seit September 2026",
     note: "Berufsbegleitendes Studium",
   },
   {
@@ -201,10 +201,10 @@ export default function App() {
             </span>
             <div className="flex flex-col">
               <span className="font-mono text-xs text-muted-foreground tracking-widest uppercase">
-                VERFÜGBAR AB AUGUST 2026
+                VERFÜGBAR AB SOFORT / NACH VEREINBARUNG
               </span>
               <span className="font-mono text-xs text-muted-foreground italic">
-                Master Wirtschaftsinformatik Online (HAW Kiel, ab Sept. 2026)
+                Master Wirtschaftsinformatik Online (HAW Kiel, seit Sept. 2026)
               </span>
             </div>
           </div>
@@ -458,6 +458,16 @@ export default function App() {
             />
             <span className="font-mono text-xs text-muted-foreground">River Chiu</span>
           </button>
+          
+          <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+            <span>Aufrufe:</span>
+            <img 
+              src="https://hits.seeyoufarm.com/api/count/badge.svg?url=https%3A%2F%2Friverchiu-dev.github.io&count_bg=%232a2a2a&title_bg=%23121212&icon=&icon_color=%23f0ede6&title=Views&edge_flat=true" 
+              alt="Seitenaufrufe" 
+              className="h-4 opacity-80"
+            />
+          </div>
+
           <p className="font-mono text-xs text-muted-foreground text-center">
             © 2026 River Chiu — Fachinformatiker für Anwendungsentwicklung · Flensburg
           </p>
