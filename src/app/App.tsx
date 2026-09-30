@@ -72,22 +72,23 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
-
-  const [views, setViews] = useState<number | null>(null);
   
-  useEffect(() => {
-    fetch("https://api.countapi.xyz/hit/riverchiu-dev.github.io/visits")
-      .then((res) => res.json())
-      .then((data) => setViews(data.value))
-      .catch(() => {
-        fetch("https://hits.seeyoufarm.com/api/count/incr/badge.json?url=https%3A%2F%2Friverchiu-dev.github.io")
-          .then((res) => res.json())
-          .then((data) => {
-            setViews(128); 
-          })
-          .catch(() => setViews(null));
-      });
-  }, []);
+  const [views, setViews] = useState<string>("0000");
+  
+    useEffect(() => {
+      fetch("https://api.counterapi.dev/v1/riverchiu-portfolio/visits/up")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.count) {
+            setViews(String(data.count).padStart(4, "0"));
+          }
+        })
+        .catch(() => {
+          const localViews = Number(localStorage.getItem("page_views") || "128") + 1;
+          localStorage.setItem("page_views", String(localViews));
+          setViews(String(localViews).padStart(4, "0"));
+        });
+    }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -136,12 +137,14 @@ export default function App() {
                 {label}
               </button>
             ))}
-
-            <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground border-l border-border pl-6">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500/80 animate-pulse" />
-              <span className="tracking-widest uppercase text-[10px]">Visits:</span>
-              <span className="text-foreground font-bold">
-                {views !== null ? views.toLocaleString() : "..."}
+            <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
+              <img 
+                src="/images/ort.png" 
+                alt="Visitors" 
+                className="w-3.5 h-3.5 object-contain invert opacity-75 hover:opacity-100 transition-opacity" 
+              />
+              <span className="text-foreground font-bold tracking-wider">
+                {views}
               </span>
             </div>
           </div>
