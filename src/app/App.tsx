@@ -13,10 +13,10 @@ const SKILLS = [
 
 const QUALIFICATIONS = [
   {
-    title: "M.Sc. Wirtschaftsinformatik Online",
-    org: "HAW Kiel",
-    period: "seit September 2026",
-    note: "Berufsbegleitendes Studium",
+  title: "Wirtschaftsinformatik Online (M.Sc.)",
+  org: "HAW Kiel",
+  period: "seit September 2026",
+  note: "Masterstudium · Online",
   },
   {
     title: "FACHINFORMATIKER FÜR ANWENDUNGSENTWICKLUNG",
@@ -211,25 +211,30 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto w-full relative z-10">
           <p className="font-mono text-xs tracking-widest text-primary mt-5 uppercase">
-            PORTFOLIO — SOFTWARE ENGINEERING & DESIGN | FLENSBURG
+            PORTFOLIO — WIRTSCHAFTSINFORMATIK & IT | FLENSBURG
           </p>
-
+          
           <h1
             className="font-display font-black uppercase leading-none mb-10"
             style={{ fontSize: "clamp(3rem, 9.5vw, 9rem)", letterSpacing: "-0.01em" }}
           >
-            UI/UX
+            WIRTSCHAFTS-
             <br />
-            <span className="text-primary">&amp; Software</span>
+            <span className="text-primary">INFORMATIK</span>
             <br />
-            Engineering.
+            & IT.
           </h1>
-
+          
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
-            <p className="text-muted-foreground text-lg max-w-xl leading-relaxed" style={{ fontFamily: "inherit" }}>
-              Ich bin <em className="text-foreground">River Chiu</em> — IHK-zertifizierter Fachinformatiker
-              für Anwendungsentwicklung und erfahrener Grafikdesigner. Ich verbinde fundierte
-              Design-Expertise mit moderner Softwareentwicklung (Python, PHP, Odoo ERP).
+            <p
+              className="text-muted-foreground text-lg max-w-xl leading-relaxed"
+              style={{ fontFamily: "inherit" }}
+            >
+              Ich bin <em className="text-foreground">River Chiu</em> — IHK-zertifizierter
+              Fachinformatiker für Anwendungsentwicklung und M.Sc.-Student der
+              Wirtschaftsinformatik an der HAW Kiel. Ich verbinde betriebswirtschaftliches
+              Verständnis mit IT, ERP und Softwareentwicklung und interessiere mich
+              besonders für die Schnittstelle zwischen Geschäftsprozessen und technischen Lösungen.
             </p>
           </div>
           <div className="mt-12 flex items-center gap-3">
@@ -452,8 +457,8 @@ export default function App() {
               <span className="text-primary">reden.</span>
             </h2>
             <p className="text-muted-foreground mt-5 max-w-md leading-relaxed">
-              Du hast ein Projekt oder eine Idee? Ich freue mich über deine Nachricht — ob 
-              Teilzeit oder Vollzeit ab August 2026.
+              Sie suchen Unterstützung an der Schnittstelle zwischen IT, Geschäftsprozessen und Software?
+              Ich freue mich auf Ihre Nachricht.
             </p>
           </Reveal>
 
