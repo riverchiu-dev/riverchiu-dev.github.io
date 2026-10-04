@@ -169,7 +169,7 @@ export default function App() {
 
         <div className="max-w-6xl mx-auto w-full relative z-10">
           <p className="font-mono text-xs tracking-widest text-primary mt-5 uppercase">
-            PORTFOLIO — WIRTSCHAFTSINFORMATIK & IT | FLENSBURG
+            PORTFOLIO — WIRTSCHAFTSINFORMATIK | FLENSBURG
           </p>
           
           <h1
@@ -180,7 +180,6 @@ export default function App() {
             <br />
             <span className="text-primary">INFORMATIK</span>
             <br />
-            & IT.
           </h1>
           
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
