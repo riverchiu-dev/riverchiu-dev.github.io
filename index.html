@@ -2,11 +2,17 @@
   <!DOCTYPE html>
   <html lang="en">
     <head>
-      <script
-        data-goatcounter="https://riverchiu-portfolio.goatcounter.com/count"
-        async
-        src="//gc.zgo.at/count.js">
+      <script>
+        var t = setInterval(function() {
+          if (window.goatcounter && window.goatcounter.visit_count) {
+            clearInterval(t)
+            // append: '#counter-box' 代表插入到你指定的位置，而不是放在頁面最底下 (body)
+            window.goatcounter.visit_count({append: '#counter-box'})
+          }
+        }, 100)
       </script>
+      <script data-goatcounter="https://riverchiu-portfolio.goatcounter.com/count"
+              async src="//gc.zgo.at/count.js"></script>
 
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
