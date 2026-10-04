@@ -1,33 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PORTFOLIO — RIVER CHIU</title>
+    <meta name="description" content="Showcase your projects and graphic designs in a professional portfolio to attract clients and highlight your creative skills effectively." />
+    <meta name="robots" content="noindex, nofollow" />
+    <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <script>
-        var t = setInterval(function() {
-          if (window.goatcounter && window.goatcounter.visit_count) {
-            clearInterval(t)
-            // append: '#counter-box' 代表插入到你指定的位置，而不是放在頁面最底下 (body)
-            window.goatcounter.visit_count({append: '#counter-box'})
-          }
-        }, 100)
-      </script>
-      <script data-goatcounter="https://riverchiu-portfolio.goatcounter.com/count"
-              async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://riverchiu-portfolio.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+    
+    <script>
+      var checkExist = setInterval(function() {
+        var targetNode = document.getElementById('counter-box');
+        if (targetNode && window.goatcounter && window.goatcounter.visit_count) {
+          clearInterval(checkExist);
+          window.goatcounter.visit_count({ append: '#counter-box' });
+        }
+      }, 200);
+    </script>
+  </head>
 
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>PORTFOLIO — RIVER CHIU</title>
-      <meta name="description" content="Showcase your projects and graphic designs in a professional portfolio to attract clients and highlight your creative skills effectively." />
-      <meta name="robots" content="noindex, nofollow" />
-      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
-      
-    </head>
-
-    <body>
-      
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-      
-    </body>
-  </html>
-  
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
