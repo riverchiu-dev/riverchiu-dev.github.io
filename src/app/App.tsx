@@ -72,29 +72,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
-  
-  const [views, setViews] = useState<string>("0000");
-  
-  useEffect(() => {
-    fetch(
-      "https://api.counterapi.dev/v2/riverchiu_portfolio_2026/visits/up"
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Counter API returned ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (typeof data?.data?.up_count === "number") {
-          setViews(String(data.data.up_count).padStart(4, "0"));
-        }
-      })
-      .catch((err) => {
-        console.warn("Counter API unavailable:", err);
-      });
-  }, []);
-  
+    
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
@@ -154,9 +132,7 @@ export default function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               
-                <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
-                  {views}
-                </span>
+
             </div>
           </div>
 
