@@ -74,60 +74,27 @@ export default function App() {
   const [modalProject, setModalProject] = useState<Project | null>(null);
   
   const [views, setViews] = useState<string>("0000");
-
+  
   useEffect(() => {
-    const getStoredViews = (): number => {
-      const stored = localStorage.getItem("site_views_count");
-      const parsed = stored ? parseInt(stored, 10) : 0;
-      return Number.isFinite(parsed) ? parsed : 0;
-    };
-  
-    const updateLocalFallback = () => {
-      const nextViews = getStoredViews() + 1;
-      localStorage.setItem("site_views_count", String(nextViews));
-      setViews(String(nextViews).padStart(4, "0"));
-    };
-  
-    const updateViews = async () => {
-      try {
-        const response = await fetch(
-          "https://api.counterapi.dev/v2/riverchiu_portfolio_2026/visits/up",
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-  
-        if (!response.ok) {
-          throw new Error(`Counter API returned ${response.status}`);
+    fetch(
+      "https://api.counterapi.dev/v2/riverchiu_portfolio_2026/visits/up"
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Counter API returned ${res.status}`);
         }
-  
-        const data = await response.json();
-  
+        return res.json();
+      })
+      .then((data) => {
         if (typeof data?.data?.up_count === "number") {
-          const count = data.data.up_count;
-  
-          setViews(String(count).padStart(4, "0"));
-          localStorage.setItem("site_views_count", String(count));
-          return;
+          setViews(String(data.data.up_count).padStart(4, "0"));
         }
-  
-        throw new Error("Unexpected Counter API response");
-      } catch (err) {
-        console.warn(
-          "Counter API unavailable, using local fallback:",
-          err
-        );
-  
-        updateLocalFallback();
-      }
-    };
-  
-    updateViews();
+      })
+      .catch((err) => {
+        console.warn("Counter API unavailable:", err);
+      });
   }, []);
-
+  
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
