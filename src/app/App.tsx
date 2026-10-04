@@ -13,10 +13,10 @@ const SKILLS = [
 
 const QUALIFICATIONS = [
   {
-  title: "Wirtschaftsinformatik Online (M.Sc.)",
-  org: "HAW Kiel",
-  period: "seit September 2026",
-  note: "Masterstudium · Online",
+    title: "Wirtschaftsinformatik Online (M.Sc.)",
+    org: "HAW Kiel",
+    period: "seit September 2026",
+    note: "Masterstudium · Online",
   },
   {
     title: "FACHINFORMATIKER FÜR ANWENDUNGSENTWICKLUNG",
@@ -76,6 +76,14 @@ export default function App() {
   const [views, setViews] = useState<string>("0000");
 
   useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     fetch("https://riverchiu-portfolio.goatcounter.com/counter//.json")
       .then((res) => {
         if (!res.ok) {
@@ -85,7 +93,7 @@ export default function App() {
       })
       .then((data) => {
         if (typeof data?.count === "string") {
-          const count = parseInt(data.count.replace(/,/g, ""), 10);
+          const count = parseInt(data.count.replace(/,/g, "").replace(/\s/g, ""), 10);
           if (!Number.isNaN(count)) {
             setViews(String(count).padStart(4, "0"));
           }
@@ -133,38 +141,40 @@ export default function App() {
             <span className="font-mono text-xs tracking-widest uppercase font-bold text-foreground">River Chiu</span>
           </button>
 
-          <div className="hidden md:flex items-center gap-8">
-            {[["Projekte", "projekte"], ["Qualifikationen", "qualifikationen"], ["Kontakt", "kontakt"]].map(([label, id]) => (
-              <button
-                key={id}
-                onClick={() => scrollTo(id)}
-                className="font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {label}
-              </button>
-            ))}
-              <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
-                <svg 
-                  className="w-4 h-4 text-muted-foreground/80" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="1.5" 
-                  viewBox="0 0 24 24"
+          <div className="flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-8">
+              {[["Projekte", "projekte"], ["Qualifikationen", "qualifikationen"], ["Kontakt", "kontakt"]].map(([label, id]) => (
+                <button
+                  key={id}
+                  onClick={() => scrollTo(id)}
+                  className="font-mono text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                
-                <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
-                  {views}
-                </span>
-
+                  {label}
+                </button>
+              ))}
             </div>
-          </div>
 
-          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+            <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
+              <svg 
+                className="w-4 h-4 text-muted-foreground/80" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.5" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              
+              <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
+                {views}
+              </span>
+            </div>
+
+            <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         <div
