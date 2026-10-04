@@ -72,37 +72,6 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeProject, setActiveProject] = useState<number | null>(null);
   const [modalProject, setModalProject] = useState<Project | null>(null);
-
-  const [views, setViews] = useState<string>("0000");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    fetch("https://riverchiu-portfolio.goatcounter.com/counter//.json")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`GoatCounter returned ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (typeof data?.count === "string") {
-          const count = parseInt(data.count.replace(/,/g, "").replace(/\s/g, ""), 10);
-          if (!Number.isNaN(count)) {
-            setViews(String(count).padStart(4, "0"));
-          }
-        }
-      })
-      .catch((err) => {
-        console.warn("GoatCounter visitor counter unavailable:", err);
-      });
-  }, []);
   
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -152,23 +121,6 @@ export default function App() {
                   {label}
                 </button>
               ))}
-            </div>
-
-            <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground border-l border-border pl-6">
-              <svg 
-                className="w-4 h-4 text-muted-foreground/80" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              
-              <span className="text-muted-foreground font-mono text-xs tracking-widest font-normal">
-                {views}
-              </span>
             </div>
 
             <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
